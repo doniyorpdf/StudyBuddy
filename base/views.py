@@ -72,6 +72,7 @@ def home(request):
     'room_count':room_count, 'room_messages':room_messages}
     return render(request ,'base/home.html', context)
 
+@login_required
 def room(request, pk):
     room = Room.objects.get(id=pk)
     room_messages = room.message_set.all().order_by('-created')
@@ -113,7 +114,7 @@ def createRoom(request):
         )
         return redirect('home')
 
-    context={'form': form, 'topics':topics}
+    context={'form': form, 'topics': topics}
     return render(request, 'base/room_form.html', context)
 
 @login_required(login_url='login')
